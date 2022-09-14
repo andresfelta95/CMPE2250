@@ -63,5 +63,8 @@ void Timer_SleepCounts2(uint, Timer_CH_BIT, uint*);
 //blocking delay for x [ms], no matter what prescale or BUS speed is active
 void Timer_Sleep_ms(unsigned int);
 
+//blocking delay for x [us], no matter what prescale or BUS speed is active
+void Timer_Sleep_us(unsigned int val);
+
 
 

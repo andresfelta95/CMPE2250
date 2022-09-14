@@ -26,6 +26,7 @@
 /////////////////////////////////////////////////////////////////////////////
 void _LCD(void);
 void binaer(void);
+void _GetDigits(uint num, uint *d1, uint *d2, uint *d3, uint *d4);
 /////////////////////////////////////////////////////////////////////////////
 // Global Variables
 /////////////////////////////////////////////////////////////////////////////
@@ -34,10 +35,12 @@ char course[40] = {0};
 char cntDisplay[40] = {0};
 char binaryCnt[40] = {0};
 char regCnt[40] = {0};
-int j = 0;
 uint  msCount = 0;
 uint count = 0;
-uint loopVal;
+uint _d1 = 0;
+uint _d2 = 0;
+uint _d3 = 0;
+uint _d4 = 0;
 
 /////////////////////////////////////////////////////////////////////////////
 // Constants
@@ -61,7 +64,7 @@ void main(void)
   SwLED_Init();
   SevSeg_Init();
   //init timer
-  Timer_Init(Timer_Prescale_32);
+  Timer_Init(Timer_Prescale_2);
   //set chn0 as output
   TimerCH_EnableAsOutput(Timer_CH0_BIT);
 
@@ -76,7 +79,7 @@ void main(void)
   TCTL2_OM0 = 0;  
   TCTL2_OL0 = 1;
 
-  TC0 = TCNT + 3125; //5ms
+  TC0 = TCNT + 50000; //5ms
 
   lcd_Clear();
   //Count in hex on LCD
@@ -111,7 +114,7 @@ void main(void)
     // check the timer every 5ms
     if (TFLG1 & TFLG1_C0F_MASK)
     {
-      TC0 += 3125;//clear flag
+      TC0 += 50000;//clear flag
       //increase count every 100 cycles
       if(++msCount > 99)
       {
@@ -133,6 +136,14 @@ void main(void)
     {
       SevSeg_Top4(HexToBCD(9999 - count));
     }
+    else if (rightS == Held)
+    {
+      _GetDigits(count, &_d1, &_d2, &_d3, &_d4);
+      SevSeg_Cust(0, (char)_d1);
+      SevSeg_Cust(1, (char)_d2);
+      SevSeg_Cust(2, (char)_d3);
+      SevSeg_Cust(3, (char)_d4);
+    }    
     else    
     {
       SevSeg_ClearTop4();
@@ -159,6 +170,8 @@ void main(void)
 /////////////////////////////////////////////////////////////////////////////
 //
 void binaer(void){
+  int j = 0;
+  uint loopVal;
   if(0 <= count && count <= 65535) 
   {
     loopVal = count;
@@ -174,6 +187,14 @@ void binaer(void){
       loopVal = loopVal / 2;
     }
   }    
+}
+
+void _GetDigits(uint num, uint *d1, uint *d2, uint *d3, uint *d4)
+{
+  *d1 = num / 1000;
+  *d2 = (num % 1000) / 100;
+  *d3 = (num % 100) / 10;
+  *d4 = num % 10;
 }
 
 void _LCD(void){
