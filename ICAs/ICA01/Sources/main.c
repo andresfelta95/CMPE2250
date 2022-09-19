@@ -35,7 +35,7 @@ char course[40] = {0};
 char cntDisplay[40] = {0};
 char binaryCnt[40] = {0};
 char regCnt[40] = {0};
-uint  msCount = 0;
+uint msCount = 0;
 uint count = 0;
 uint _d1 = 0;
 uint _d2 = 0;
@@ -118,6 +118,7 @@ void main(void)
       //increase count every 100 cycles
       if(++msCount > 99)
       {
+        LED_Tog(LED_YELLOW);
         msCount = 0;
         if(++count > 9999)
         {
@@ -139,10 +140,10 @@ void main(void)
     else if (rightS == Held)
     {
       _GetDigits(count, &_d1, &_d2, &_d3, &_d4);
-      SevSeg_Cust(0, (char)_d1);
-      SevSeg_Cust(1, (char)_d2);
-      SevSeg_Cust(2, (char)_d3);
-      SevSeg_Cust(3, (char)_d4);
+      SevSeg_Cust(0, _d1 | 0x80);
+      SevSeg_Cust(1, _d2 | 0x80);
+      SevSeg_Cust(2, _d3 | 0x80);
+      SevSeg_Cust(3, _d4 | 0x80);
     }    
     else    
     {

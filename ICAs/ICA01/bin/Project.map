@@ -39,7 +39,7 @@ _startupData is allocated at 0xC031 and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
   _Range   pZeroOut       0x2100     214
-  _Copy    *toCopyDownBeg 0xD637
+  _Copy    *toCopyDownBeg 0xD64E
 } _startupData;
 
 *********************************************************************************************
@@ -50,8 +50,8 @@ Section Name                    Size  Type     From       To       Segment
 .startData                        34     R     0xC031     0xC052   ROM_C000
 .rodata                          212     R     0xC053     0xC126   ROM_C000
 .rodata1                          41     R     0xC127     0xC14F   ROM_C000
-.text                           4156     R     0xC150     0xD18B   ROM_C000
-.copy                             19     R     0xD637     0xD649   ROM_C000
+.text                           4179     R     0xC150     0xD1A2   ROM_C000
+.copy                             19     R     0xD64E     0xD660   ROM_C000
 .stack                           256   R/W     0x2000     0x20FF   RAM
 .data                             14   R/W     0x2100     0x210D   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
@@ -704,11 +704,11 @@ Section Name                    Size  Type     From       To       Segment
 .abs_section_fff0                  2     R     0xFFF0     0xFFF1   .absSeg647
 .bss                             182   R/W     0x210E     0x21C3   RAM
 .common                           18   R/W     0x21C4     0x21D5   RAM
-RUNTIME                         1195     R     0xD18C     0xD636   ROM_C000
+RUNTIME                         1195     R     0xD1A3     0xD64D   ROM_C000
 .vectSeg648_vect                   2     R     0xFFFE     0xFFFF   .vectSeg648
 
 Summary of section sizes per section type:
-READ_ONLY (R):        164E (dec:     5710)
+READ_ONLY (R):        1665 (dec:     5733)
 READ_WRITE (R/W):      1D6 (dec:      470)
 NO_INIT (N/I):         300 (dec:      768)
 
@@ -1314,7 +1314,7 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _CAN2TXTSR                                 1FE       2       2       0   .abs_section_1fe
      _CAN3RXTSR                                 22E       2       2       0   .abs_section_22e
      _CAN3TXTSR                                 23E       2       2       0   .abs_section_23e
-     _PT01AD1                                   278       2       2       2   .abs_section_278
+     _PT01AD1                                   278       2       2       4   .abs_section_278
      _DDR01AD1                                  27A       2       2       1   .abs_section_27a
      _RDR01AD1                                  27C       2       2       0   .abs_section_27c
      _PER01AD1                                  27E       2       2       0   .abs_section_27e
@@ -1374,10 +1374,10 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _XGR7                                      3AE       2       2       0   .abs_section_3ae
 MODULE:                 -- main.c.o --
 - PROCEDURES:
-     main                                      C150     1D7     471       4   .text       
-     binaer                                    C327      2D      45       2   .text       
-     _GetDigits                                C354      39      57       1   .text       
-     _LCD                                      C38D       1       1       1   .text       
+     main                                      C150     1E4     484       4   .text       
+     binaer                                    C334      2D      45       2   .text       
+     _GetDigits                                C361      39      57       1   .text       
+     _LCD                                      C39A       1       1       1   .text       
 - VARIABLES:
      STRING..04x.2                             C127       5       5       1   .rodata1    
      STRING..04d.3                             C12C       5       5       1   .rodata1    
@@ -1412,15 +1412,15 @@ MODULE:                 -- Start12.c.o --
      __SEG_END_SSTACK                          2100       0       0       1               
 MODULE:                 -- MATH.C.o (ansixs.lib) --
 - PROCEDURES:
-     pow_i                                     C38E      A8     168       1   .text       
+     pow_i                                     C39B      A8     168       1   .text       
 - VARIABLES:
 MODULE:                 -- PRINTF.C.o (ansixs.lib) --
 - PROCEDURES:
-     Ten                                       C436      AC     172       3   .text       
-     vprintf                                   C4E2     8D4    2260     107   .text       
-     _out                                      CDB6       9       9      14   .text       
-     deposit_char                              CDBF       A      10       1   .text       
-     sprintf                                   CDC9      27      39       7   .text       
+     Ten                                       C443      AC     172       3   .text       
+     vprintf                                   C4EF     8D4    2260     107   .text       
+     _out                                      CDC3       9       9      14   .text       
+     deposit_char                              CDCC       A      10       1   .text       
+     sprintf                                   CDD6      27      39       7   .text       
 - VARIABLES:
      pow10                                     C053      28      40       4   .rodata     
      pow16                                     C07B      20      32       4   .rodata     
@@ -1430,108 +1430,109 @@ MODULE:                 -- PRINTF.C.o (ansixs.lib) --
      pbuf                                      21BA       6       6      14   .bss        
 MODULE:                 -- FADD.C.o (ansixs.lib) --
 - PROCEDURES:
-     F_ADDKL                                   D18C      5E      94       1   RUNTIME     
-     _FADD                                     D1EA      15      21       3   RUNTIME     
-     _FSUB                                     D1FF      13      19       1   RUNTIME     
-     _FNEG                                     D212       B      11       1   RUNTIME     
+     F_ADDKL                                   D1A3      5E      94       1   RUNTIME     
+     _FADD                                     D201      15      21       3   RUNTIME     
+     _FSUB                                     D216      13      19       1   RUNTIME     
+     _FNEG                                     D229       B      11       1   RUNTIME     
 - VARIABLES:
 MODULE:                 -- FANSI.C.o (ansixs.lib) --
 - PROCEDURES:
-     F_FREXP                                   D21D      1F      31       1   RUNTIME     
-     frexpf                                    D23C      19      25       1   RUNTIME     
+     F_FREXP                                   D234      1F      31       1   RUNTIME     
+     frexpf                                    D253      19      25       1   RUNTIME     
 - VARIABLES:
 MODULE:                 -- FCMP.C.o (ansixs.lib) --
 - PROCEDURES:
-     _FCMP                                     D255      26      38       2   RUNTIME     
+     _FCMP                                     D26C      26      38       2   RUNTIME     
 - VARIABLES:
 MODULE:                 -- FCONV.C.o (ansixs.lib) --
 - PROCEDURES:
-     F_TOLONGK                                 D27B      32      50       1   RUNTIME     
-     F_FRLONGK                                 D2AD      1E      30       1   RUNTIME     
-     _FUFLOAT                                  D2CB      12      18       1   RUNTIME     
-     _FSTRUNC                                  D2DD      11      17       1   RUNTIME     
-     _FUTRUNC                                  D2EE       3       3       3   RUNTIME     
+     F_TOLONGK                                 D292      32      50       1   RUNTIME     
+     F_FRLONGK                                 D2C4      1E      30       1   RUNTIME     
+     _FUFLOAT                                  D2E2      12      18       1   RUNTIME     
+     _FSTRUNC                                  D2F4      11      17       1   RUNTIME     
+     _FUTRUNC                                  D305       3       3       3   RUNTIME     
 - VARIABLES:
 MODULE:                 -- FMUL.C.o (ansixs.lib) --
 - PROCEDURES:
-     F_DIVKL                                   D2F1      84     132       1   RUNTIME     
-     F_MULKL                                   D375      57      87       1   RUNTIME     
-     _FMUL                                     D3CC      14      20      11   RUNTIME     
-     _FDIV                                     D3E0      1E      30       1   RUNTIME     
+     F_DIVKL                                   D308      84     132       1   RUNTIME     
+     F_MULKL                                   D38C      57      87       1   RUNTIME     
+     _FMUL                                     D3E3      14      20      11   RUNTIME     
+     _FDIV                                     D3F7      1E      30       1   RUNTIME     
 - VARIABLES:
 MODULE:                 -- FREGS.C.o (ansixs.lib) --
 - PROCEDURES:
-     F_PULK                                    D3FE      15      21       4   RUNTIME     
-     F_PULL                                    D413      15      21       4   RUNTIME     
-     F_PSHK                                    D428      13      19       5   RUNTIME     
-     F_TLK                                     D43B       D      13       1   RUNTIME     
-     F_XGKL                                    D448      21      33       2   RUNTIME     
-     F_CLRK                                    D469       B      11       2   RUNTIME     
-     F_MAXK                                    D474       9       9       2   RUNTIME     
-     F_NORMK                                   D47D      37      55       4   RUNTIME     
+     F_PULK                                    D415      15      21       4   RUNTIME     
+     F_PULL                                    D42A      15      21       4   RUNTIME     
+     F_PSHK                                    D43F      13      19       5   RUNTIME     
+     F_TLK                                     D452       D      13       1   RUNTIME     
+     F_XGKL                                    D45F      21      33       2   RUNTIME     
+     F_CLRK                                    D480       B      11       2   RUNTIME     
+     F_MAXK                                    D48B       9       9       2   RUNTIME     
+     F_NORMK                                   D494      37      55       4   RUNTIME     
 - VARIABLES:
 MODULE:                 -- rtshc12.c.o (ansixs.lib) --
 - PROCEDURES:
-     _BDIVMODS                                 D4B4       B      11       4   RUNTIME     
-     _ISHRU                                    D4BF       B      11       2   RUNTIME     
-     _LNEG                                     D4CA       9       9       2   RUNTIME     
-     _LDEC                                     D4D3       8       8       1   RUNTIME     
-     _LMULS16x32                               D4DB      1C      28       1   RUNTIME     
-     _lDivMod                                  D4F7      B9     185       2   RUNTIME     
-     _LDIVU                                    D5B0       E      14       2   RUNTIME     
-     _NEG_P                                    D5BE       C      12       1   RUNTIME     
-     _LMODU                                    D5CA      11      17       1   RUNTIME     
-     _CASE_DIRECT_BYTE                         D5DB       5       5       1   RUNTIME     
-     _CASE_CHECKED_BYTE                        D5E0      14      20       2   RUNTIME     
-     _CASE_SEARCH_8                            D5F4      17      23       1   RUNTIME     
-     _CASE_SEARCH_8_BYTE                       D60B      1A      26       1   RUNTIME     
+     _BDIVMODS                                 D4CB       B      11       4   RUNTIME     
+     _ISHRU                                    D4D6       B      11       2   RUNTIME     
+     _LNEG                                     D4E1       9       9       2   RUNTIME     
+     _LDEC                                     D4EA       8       8       1   RUNTIME     
+     _LMULS16x32                               D4F2      1C      28       1   RUNTIME     
+     _lDivMod                                  D50E      B9     185       2   RUNTIME     
+     _LDIVU                                    D5C7       E      14       2   RUNTIME     
+     _NEG_P                                    D5D5       C      12       1   RUNTIME     
+     _LMODU                                    D5E1      11      17       1   RUNTIME     
+     _CASE_DIRECT_BYTE                         D5F2       5       5       1   RUNTIME     
+     _CASE_CHECKED_BYTE                        D5F7      14      20       2   RUNTIME     
+     _CASE_SEARCH_8                            D60B      17      23       1   RUNTIME     
+     _CASE_SEARCH_8_BYTE                       D622      1A      26       1   RUNTIME     
 - VARIABLES:
 MODULE:                 -- VREGS.C.o (ansixs.lib) --
 - PROCEDURES:
-     L_NEGK                                    D625       7       7       1   RUNTIME     
-     L_PSHK                                    D62C       8       8       1   RUNTIME     
-     UL_PULK                                   D634       3       3       1   RUNTIME     
+     L_NEGK                                    D63C       7       7       1   RUNTIME     
+     L_PSHK                                    D643       8       8       1   RUNTIME     
+     UL_PULK                                   D64B       3       3       1   RUNTIME     
 - VARIABLES:
 MODULE:                 -- lcd.c.o --
 - PROCEDURES:
-     lcd_Init                                  CDF0      57      87       1   .text       
-     lcd_Ctrl                                  CE47      20      32       7   .text       
-     lcd_Busy                                  CE67      20      32       2   .text       
-     lcd_Data                                  CE87      1F      31       1   .text       
-     lcd_Addr                                  CEA6       A      10       1   .text       
-     lcd_AddrXY                                CEB0      36      54       1   .text       
-     lcd_String                                CEE6       F      15       1   .text       
-     lcd_StringXY                              CEF5       E      14       6   .text       
-     lcd_DispControl                           CF03      36      54       1   .text       
-     lcd_Clear                                 CF39       5       5       1   .text       
+     lcd_Init                                  CDFD      57      87       1   .text       
+     lcd_Ctrl                                  CE54      20      32       7   .text       
+     lcd_Busy                                  CE74      20      32       2   .text       
+     lcd_Data                                  CE94      1F      31       1   .text       
+     lcd_Addr                                  CEB3       A      10       1   .text       
+     lcd_AddrXY                                CEBD      36      54       1   .text       
+     lcd_String                                CEF3       F      15       1   .text       
+     lcd_StringXY                              CF02       E      14       6   .text       
+     lcd_DispControl                           CF10      36      54       1   .text       
+     lcd_Clear                                 CF46       5       5       1   .text       
 - VARIABLES:
 MODULE:                 -- LEDSW.c.o --
 - PROCEDURES:
-     SwLED_Init                                CF3E       E      14       1   .text       
-     Sw_Process                                CF4C      2A      42       5   .text       
+     SwLED_Init                                CF4B       E      14       1   .text       
+     LED_Tog                                   CF59       A      10       1   .text       
+     Sw_Process                                CF63      2A      42       5   .text       
 - VARIABLES:
 MODULE:                 -- SevSeg.c.o --
 - PROCEDURES:
-     SevSeg_Init                               CF76       A      10       1   .text       
-     SevSeg_Char                               CF80      26      38       2   .text       
-     SevSeg_ClearDigit                         CFA6      23      35       2   .text       
-     SevSeg_ClearTop4                          CFC9      16      22       1   .text       
-     SevSeg_ClearAll                           CFDF      16      22       1   .text       
-     SevSeg_Top4                               CFF5      2E      46       1   .text       
-     SevSeg_Bot4                               D023      30      48       1   .text       
-     SevSeg_Cust                               D053      23      35       4   .text       
-     HexToBCD                                  D076      3A      58       2   .text       
+     SevSeg_Init                               CF8D       A      10       1   .text       
+     SevSeg_Char                               CF97      26      38       2   .text       
+     SevSeg_ClearDigit                         CFBD      23      35       2   .text       
+     SevSeg_ClearTop4                          CFE0      16      22       1   .text       
+     SevSeg_ClearAll                           CFF6      16      22       1   .text       
+     SevSeg_Top4                               D00C      2E      46       1   .text       
+     SevSeg_Bot4                               D03A      30      48       1   .text       
+     SevSeg_Cust                               D06A      23      35       4   .text       
+     HexToBCD                                  D08D      3A      58       2   .text       
 - VARIABLES:
      i                                         21CE       2       2      18   .common     
      value                                     21D0       2       2       4   .common     
 MODULE:                 -- Clock.c.o --
 - PROCEDURES:
-     Clock_GetBusSpeed                         D0B0      36      54       1   .text       
-     PIT_Init                                  D0E6      10      16       1   .text       
-     PIT_Delay_us                              D0F6      34      52       6   .text       
-     RTI_Init                                  D12A       D      13       1   .text       
-     RTI_Delay_ms                              D137      16      22       2   .text       
-     Vrti_Handler                              D14D      18      24       1   .text       
+     Clock_GetBusSpeed                         D0C7      36      54       1   .text       
+     PIT_Init                                  D0FD      10      16       1   .text       
+     PIT_Delay_us                              D10D      34      52       6   .text       
+     RTI_Init                                  D141       D      13       1   .text       
+     RTI_Delay_ms                              D14E      16      22       2   .text       
+     Vrti_Handler                              D164      18      24       1   .text       
 - VARIABLES:
      busspeed                                  210A       4       4       6   .data       
      RTI_mscntr                                21C0       4       4       8   .bss        
@@ -1539,8 +1540,8 @@ MODULE:                 -- Clock.c.o --
      RTI_Tick                                  21D2       2       2       2   .common     
 MODULE:                 -- ECT.c.o --
 - PROCEDURES:
-     Timer_Init                                D165      1E      30       1   .text       
-     TimerCH_EnableAsOutput                    D183       9       9       1   .text       
+     Timer_Init                                D17C      1E      30       1   .text       
+     TimerCH_EnableAsOutput                    D19A       9       9       1   .text       
 - VARIABLES:
      Prscaleval                                21D4       2       2       1   .common     
 
@@ -1549,7 +1550,7 @@ MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
   mc9s12xdp512.c.o                           768      0      0
-  main.c.o                                   192    574     41
+  main.c.o                                   192    587     41
   Start12.c.o                                  0     49      0
   MATH.C.o (ansixs.lib)                        0    168      0
   PRINTF.C.o (ansixs.lib)                      6   2490    212
@@ -1562,7 +1563,7 @@ MODULE STATISTIC
   rtshc12.c.o (ansixs.lib)                     0    369      0
   VREGS.C.o (ansixs.lib)                       0     18      0
   lcd.c.o                                      0    334      0
-  LEDSW.c.o                                    0     56      0
+  LEDSW.c.o                                    0     66      0
   SevSeg.c.o                                   4    314      0
   Clock.c.o                                   10    181      2
   ECT.c.o                                      2     39      0
@@ -1574,10 +1575,11 @@ SECTION USE IN OBJECT-ALLOCATION SECTION
 SECTION: ".text"
   main binaer _GetDigits _LCD pow_i Ten vprintf _out deposit_char sprintf 
   lcd_Init lcd_Ctrl lcd_Busy lcd_Data lcd_Addr lcd_AddrXY lcd_String 
-  lcd_StringXY lcd_DispControl lcd_Clear SwLED_Init Sw_Process SevSeg_Init 
-  SevSeg_Char SevSeg_ClearDigit SevSeg_ClearTop4 SevSeg_ClearAll SevSeg_Top4 
-  SevSeg_Bot4 SevSeg_Cust HexToBCD Clock_GetBusSpeed PIT_Init PIT_Delay_us 
-  RTI_Init RTI_Delay_ms Vrti_Handler Timer_Init TimerCH_EnableAsOutput 
+  lcd_StringXY lcd_DispControl lcd_Clear SwLED_Init LED_Tog Sw_Process 
+  SevSeg_Init SevSeg_Char SevSeg_ClearDigit SevSeg_ClearTop4 SevSeg_ClearAll 
+  SevSeg_Top4 SevSeg_Bot4 SevSeg_Cust HexToBCD Clock_GetBusSpeed PIT_Init 
+  PIT_Delay_us RTI_Init RTI_Delay_ms Vrti_Handler Timer_Init 
+  TimerCH_EnableAsOutput 
 SECTION: ".data"
   name busspeed 
 SECTION: ".bss"
@@ -3403,7 +3405,7 @@ OBJECT LIST SORTED BY ADDRESS
      _DDR1AD0                                   273       1       1       0   .abs_section_273
      _RDR1AD0                                   275       1       1       0   .abs_section_275
      _PER1AD0                                   277       1       1       0   .abs_section_277
-     _PT01AD1                                   278       2       2       2   .abs_section_278
+     _PT01AD1                                   278       2       2       4   .abs_section_278
      _DDR01AD1                                  27A       2       2       1   .abs_section_27a
      _RDR01AD1                                  27C       2       2       0   .abs_section_27c
      _PER01AD1                                  27E       2       2       0   .abs_section_27e
@@ -3583,85 +3585,86 @@ OBJECT LIST SORTED BY ADDRESS
      STRING..04X.6                             C140       5       5       1   .rodata1    
      STRING..04d.7                             C145       5       5       1   .rodata1    
      STRING...16s.8                            C14A       6       6       1   .rodata1    
-     main                                      C150     1D7     471       4   .text       
-     binaer                                    C327      2D      45       2   .text       
-     _GetDigits                                C354      39      57       1   .text       
-     _LCD                                      C38D       1       1       1   .text       
-     pow_i                                     C38E      A8     168       1   .text       
-     Ten                                       C436      AC     172       3   .text       
-     vprintf                                   C4E2     8D4    2260     107   .text       
-     _out                                      CDB6       9       9      14   .text       
-     deposit_char                              CDBF       A      10       1   .text       
-     sprintf                                   CDC9      27      39       7   .text       
-     lcd_Init                                  CDF0      57      87       1   .text       
-     lcd_Ctrl                                  CE47      20      32       7   .text       
-     lcd_Busy                                  CE67      20      32       2   .text       
-     lcd_Data                                  CE87      1F      31       1   .text       
-     lcd_Addr                                  CEA6       A      10       1   .text       
-     lcd_AddrXY                                CEB0      36      54       1   .text       
-     lcd_String                                CEE6       F      15       1   .text       
-     lcd_StringXY                              CEF5       E      14       6   .text       
-     lcd_DispControl                           CF03      36      54       1   .text       
-     lcd_Clear                                 CF39       5       5       1   .text       
-     SwLED_Init                                CF3E       E      14       1   .text       
-     Sw_Process                                CF4C      2A      42       5   .text       
-     SevSeg_Init                               CF76       A      10       1   .text       
-     SevSeg_Char                               CF80      26      38       2   .text       
-     SevSeg_ClearDigit                         CFA6      23      35       2   .text       
-     SevSeg_ClearTop4                          CFC9      16      22       1   .text       
-     SevSeg_ClearAll                           CFDF      16      22       1   .text       
-     SevSeg_Top4                               CFF5      2E      46       1   .text       
-     SevSeg_Bot4                               D023      30      48       1   .text       
-     SevSeg_Cust                               D053      23      35       4   .text       
-     HexToBCD                                  D076      3A      58       2   .text       
-     Clock_GetBusSpeed                         D0B0      36      54       1   .text       
-     PIT_Init                                  D0E6      10      16       1   .text       
-     PIT_Delay_us                              D0F6      34      52       6   .text       
-     RTI_Init                                  D12A       D      13       1   .text       
-     RTI_Delay_ms                              D137      16      22       2   .text       
-     Vrti_Handler                              D14D      18      24       1   .text       
-     Timer_Init                                D165      1E      30       1   .text       
-     TimerCH_EnableAsOutput                    D183       9       9       1   .text       
-     F_ADDKL                                   D18C      5E      94       1   RUNTIME     
-     _FADD                                     D1EA      15      21       3   RUNTIME     
-     _FSUB                                     D1FF      13      19       1   RUNTIME     
-     _FNEG                                     D212       B      11       1   RUNTIME     
-     F_FREXP                                   D21D      1F      31       1   RUNTIME     
-     frexpf                                    D23C      19      25       1   RUNTIME     
-     _FCMP                                     D255      26      38       2   RUNTIME     
-     F_TOLONGK                                 D27B      32      50       1   RUNTIME     
-     F_FRLONGK                                 D2AD      1E      30       1   RUNTIME     
-     _FUFLOAT                                  D2CB      12      18       1   RUNTIME     
-     _FSTRUNC                                  D2DD      11      17       1   RUNTIME     
-     _FUTRUNC                                  D2EE       3       3       3   RUNTIME     
-     F_DIVKL                                   D2F1      84     132       1   RUNTIME     
-     F_MULKL                                   D375      57      87       1   RUNTIME     
-     _FMUL                                     D3CC      14      20      11   RUNTIME     
-     _FDIV                                     D3E0      1E      30       1   RUNTIME     
-     F_PULK                                    D3FE      15      21       4   RUNTIME     
-     F_PULL                                    D413      15      21       4   RUNTIME     
-     F_PSHK                                    D428      13      19       5   RUNTIME     
-     F_TLK                                     D43B       D      13       1   RUNTIME     
-     F_XGKL                                    D448      21      33       2   RUNTIME     
-     F_CLRK                                    D469       B      11       2   RUNTIME     
-     F_MAXK                                    D474       9       9       2   RUNTIME     
-     F_NORMK                                   D47D      37      55       4   RUNTIME     
-     _BDIVMODS                                 D4B4       B      11       4   RUNTIME     
-     _ISHRU                                    D4BF       B      11       2   RUNTIME     
-     _LNEG                                     D4CA       9       9       2   RUNTIME     
-     _LDEC                                     D4D3       8       8       1   RUNTIME     
-     _LMULS16x32                               D4DB      1C      28       1   RUNTIME     
-     _lDivMod                                  D4F7      B9     185       2   RUNTIME     
-     _LDIVU                                    D5B0       E      14       2   RUNTIME     
-     _NEG_P                                    D5BE       C      12       1   RUNTIME     
-     _LMODU                                    D5CA      11      17       1   RUNTIME     
-     _CASE_DIRECT_BYTE                         D5DB       5       5       1   RUNTIME     
-     _CASE_CHECKED_BYTE                        D5E0      14      20       2   RUNTIME     
-     _CASE_SEARCH_8                            D5F4      17      23       1   RUNTIME     
-     _CASE_SEARCH_8_BYTE                       D60B      1A      26       1   RUNTIME     
-     L_NEGK                                    D625       7       7       1   RUNTIME     
-     L_PSHK                                    D62C       8       8       1   RUNTIME     
-     UL_PULK                                   D634       3       3       1   RUNTIME     
+     main                                      C150     1E4     484       4   .text       
+     binaer                                    C334      2D      45       2   .text       
+     _GetDigits                                C361      39      57       1   .text       
+     _LCD                                      C39A       1       1       1   .text       
+     pow_i                                     C39B      A8     168       1   .text       
+     Ten                                       C443      AC     172       3   .text       
+     vprintf                                   C4EF     8D4    2260     107   .text       
+     _out                                      CDC3       9       9      14   .text       
+     deposit_char                              CDCC       A      10       1   .text       
+     sprintf                                   CDD6      27      39       7   .text       
+     lcd_Init                                  CDFD      57      87       1   .text       
+     lcd_Ctrl                                  CE54      20      32       7   .text       
+     lcd_Busy                                  CE74      20      32       2   .text       
+     lcd_Data                                  CE94      1F      31       1   .text       
+     lcd_Addr                                  CEB3       A      10       1   .text       
+     lcd_AddrXY                                CEBD      36      54       1   .text       
+     lcd_String                                CEF3       F      15       1   .text       
+     lcd_StringXY                              CF02       E      14       6   .text       
+     lcd_DispControl                           CF10      36      54       1   .text       
+     lcd_Clear                                 CF46       5       5       1   .text       
+     SwLED_Init                                CF4B       E      14       1   .text       
+     LED_Tog                                   CF59       A      10       1   .text       
+     Sw_Process                                CF63      2A      42       5   .text       
+     SevSeg_Init                               CF8D       A      10       1   .text       
+     SevSeg_Char                               CF97      26      38       2   .text       
+     SevSeg_ClearDigit                         CFBD      23      35       2   .text       
+     SevSeg_ClearTop4                          CFE0      16      22       1   .text       
+     SevSeg_ClearAll                           CFF6      16      22       1   .text       
+     SevSeg_Top4                               D00C      2E      46       1   .text       
+     SevSeg_Bot4                               D03A      30      48       1   .text       
+     SevSeg_Cust                               D06A      23      35       4   .text       
+     HexToBCD                                  D08D      3A      58       2   .text       
+     Clock_GetBusSpeed                         D0C7      36      54       1   .text       
+     PIT_Init                                  D0FD      10      16       1   .text       
+     PIT_Delay_us                              D10D      34      52       6   .text       
+     RTI_Init                                  D141       D      13       1   .text       
+     RTI_Delay_ms                              D14E      16      22       2   .text       
+     Vrti_Handler                              D164      18      24       1   .text       
+     Timer_Init                                D17C      1E      30       1   .text       
+     TimerCH_EnableAsOutput                    D19A       9       9       1   .text       
+     F_ADDKL                                   D1A3      5E      94       1   RUNTIME     
+     _FADD                                     D201      15      21       3   RUNTIME     
+     _FSUB                                     D216      13      19       1   RUNTIME     
+     _FNEG                                     D229       B      11       1   RUNTIME     
+     F_FREXP                                   D234      1F      31       1   RUNTIME     
+     frexpf                                    D253      19      25       1   RUNTIME     
+     _FCMP                                     D26C      26      38       2   RUNTIME     
+     F_TOLONGK                                 D292      32      50       1   RUNTIME     
+     F_FRLONGK                                 D2C4      1E      30       1   RUNTIME     
+     _FUFLOAT                                  D2E2      12      18       1   RUNTIME     
+     _FSTRUNC                                  D2F4      11      17       1   RUNTIME     
+     _FUTRUNC                                  D305       3       3       3   RUNTIME     
+     F_DIVKL                                   D308      84     132       1   RUNTIME     
+     F_MULKL                                   D38C      57      87       1   RUNTIME     
+     _FMUL                                     D3E3      14      20      11   RUNTIME     
+     _FDIV                                     D3F7      1E      30       1   RUNTIME     
+     F_PULK                                    D415      15      21       4   RUNTIME     
+     F_PULL                                    D42A      15      21       4   RUNTIME     
+     F_PSHK                                    D43F      13      19       5   RUNTIME     
+     F_TLK                                     D452       D      13       1   RUNTIME     
+     F_XGKL                                    D45F      21      33       2   RUNTIME     
+     F_CLRK                                    D480       B      11       2   RUNTIME     
+     F_MAXK                                    D48B       9       9       2   RUNTIME     
+     F_NORMK                                   D494      37      55       4   RUNTIME     
+     _BDIVMODS                                 D4CB       B      11       4   RUNTIME     
+     _ISHRU                                    D4D6       B      11       2   RUNTIME     
+     _LNEG                                     D4E1       9       9       2   RUNTIME     
+     _LDEC                                     D4EA       8       8       1   RUNTIME     
+     _LMULS16x32                               D4F2      1C      28       1   RUNTIME     
+     _lDivMod                                  D50E      B9     185       2   RUNTIME     
+     _LDIVU                                    D5C7       E      14       2   RUNTIME     
+     _NEG_P                                    D5D5       C      12       1   RUNTIME     
+     _LMODU                                    D5E1      11      17       1   RUNTIME     
+     _CASE_DIRECT_BYTE                         D5F2       5       5       1   RUNTIME     
+     _CASE_CHECKED_BYTE                        D5F7      14      20       2   RUNTIME     
+     _CASE_SEARCH_8                            D60B      17      23       1   RUNTIME     
+     _CASE_SEARCH_8_BYTE                       D622      1A      26       1   RUNTIME     
+     L_NEGK                                    D63C       7       7       1   RUNTIME     
+     L_PSHK                                    D643       8       8       1   RUNTIME     
+     UL_PULK                                   D64B       3       3       1   RUNTIME     
      _Vector_7                                 FFF0       2       2       0   .abs_section_fff0
 
 *********************************************************************************************
@@ -3692,7 +3695,7 @@ VREGS.C.o (ansixs.lib):
 lcd.c.o:
   lcd_Home lcd_SmatStringXY 
 LEDSW.c.o:
-  LED_On LED_Off LED_Tog 
+  LED_On LED_Off 
 SevSeg.c.o:
   SevSeg_CharD SevSeg_ClearBot4 BCDToHex SevSeg_Top4D SevSeg_Bot4D 
 Clock.c.o:
@@ -3713,19 +3716,19 @@ SevSeg.c.o:
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xD637 ---- SIZE       4 ---
+------- ROM-ADDRESS: 0xD64E ---- SIZE       4 ---
 Filling bytes inserted
  000D2100
-------- ROM-ADDRESS: 0xD63B ---- RAM-ADDRESS: 0x2100 ---- SIZE       9 ---
+------- ROM-ADDRESS: 0xD652 ---- RAM-ADDRESS: 0x2100 ---- SIZE       9 ---
 Name of initialized Object : name
  54616E6761 72696665
-------- ROM-ADDRESS: 0xD644 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xD65B ---- SIZE       2 ---
 Filling bytes inserted
  0000
-------- ROM-ADDRESS: 0xD646 ---- RAM-ADDRESS: 0x210B ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xD65D ---- RAM-ADDRESS: 0x210B ---- SIZE       2 ---
 Name of initialized Object : busspeed:1
  7A12
-------- ROM-ADDRESS: 0xD648 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xD65F ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -3740,7 +3743,7 @@ main                      USES PIT_Init _LCD RTI_Init lcd_Init SwLED_Init
                                 sprintf main STRING..04d.3 regCnt name lcd_StringXY 
                                 STRING.CMPE2250.4 course binaer binaryCnt STRING...16s.5 
                                 lcd_DispControl upS Sw_Process downS midS leftS rightS _TFLG1 
-                                msCount HexToBCD SevSeg_Top4 _d1 _d2 _d3 _d4 
+                                msCount LED_Tog HexToBCD SevSeg_Top4 _d1 _d2 _d3 _d4 
                                 _GetDigits SevSeg_Cust SevSeg_ClearTop4 STRING..04X.6 
                                 STRING..04d.7 SevSeg_Bot4 STRING...16s.8 
 binaer                    USES count binaryCnt 
@@ -3765,6 +3768,7 @@ lcd_StringXY              USES lcd_AddrXY lcd_String
 lcd_DispControl           USES lcd_Ctrl 
 lcd_Clear                 USES lcd_Ctrl 
 SwLED_Init                USES _PT01AD1 _DDR01AD1 _ATD1DIEN 
+LED_Tog                   USES _PT01AD1 
 Sw_Process                USES _PT01AD1 
 SevSeg_Init               USES _DDRAB SevSeg_ClearAll 
 SevSeg_Char               USES _PORTAB 
@@ -4007,6 +4011,8 @@ DEPENDENCY TREE
  |  |     
  |  +- Sw_Process          
  |  |    
+ |  +- LED_Tog             
+ |  |    
  |  +- HexToBCD            
  |  |    
  |  +- SevSeg_Top4         
@@ -4047,6 +4053,6 @@ STATISTIC SECTION
 
 ExeFile:
 --------
-Number of blocks to be downloaded: 7
-Total size of all blocks to be downloaded: 5710
+Number of blocks to be downloaded: 8
+Total size of all blocks to be downloaded: 5733
 

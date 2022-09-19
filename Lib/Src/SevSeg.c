@@ -29,7 +29,7 @@ void SevSeg_Char(unsigned char add, unsigned char value){
             ||___________Decode as HEX
             |____________No Data coming
 */
-    PORTB |= (add &  0x7);
+    PORTB |= (add &  0x7F);
     //Port A
     PORTA |= PORTA_PA1_MASK;
     //LATCH
@@ -40,7 +40,8 @@ void SevSeg_Char(unsigned char add, unsigned char value){
 
     //Port B
     PORTB = value;
-    PORTB |= 0x80; //No decimal point
+    PORTB |= 0x80;
+    
 
     
     //Port A
@@ -174,6 +175,8 @@ void SevSeg_Cust(unsigned char add, unsigned char segm){
 
     //Port B
     PORTB = segm;
+    
+    
     
 
     
