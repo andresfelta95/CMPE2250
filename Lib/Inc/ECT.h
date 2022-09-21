@@ -33,11 +33,25 @@ typedef enum __Timer_CH_BIT
   Timer_CH7_BIT = 0b10000000 //128
 }Timer_CH_BIT;
 
+// actions pins can take on compare event
+typedef enum Timer_PinAction
+{
+  Timer_Pin_Disco = 0,
+  Timer_Pin_Toggle = 1,
+  Timer_Pin_Clear = 2,
+  Timer_Pin_Set = 3
+} Timer_PinAction;
+
 
 //Initializes the timer using the input prescale
 // REGISTERS:
 // TSCR2, TSCR1
 void Timer_Init(Timer_Prescale);
+
+//Initializes the timer with inrrupts
+// REGISTERS:
+// TSCR2, TSCR1, TIE
+void Timer_InitCH0 (unsigned long ulBusClock, Timer_Prescale prescale, unsigned int uiOffset, int enableInt, Timer_PinAction pinAction);
 
 //Set channel as Output Compare(1)
 // REGISTERS:
