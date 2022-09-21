@@ -38,7 +38,7 @@ char _loop[] = "Loops:";
 char _cnt1[10] = {0};
 char _cnt2[10] = {0};
 unsigned long loop = 0;
-unsigned int ticks = 0;
+unsigned long ticks = 0;
 /////////////////////////////////////////////////////////////////////////////
 // Main Entry
 /////////////////////////////////////////////////////////////////////////////
@@ -76,13 +76,13 @@ void main(void)
     // display name
     lcd_StringXY(3,0,name);
     // display ticks counter
-    (void)sprintf(_cnt2,"%4d",ticks);
-    lcd_StringXY(0,16,_cnt2);
+    (void)sprintf(_cnt2,"%6ld",ticks);
+    lcd_StringXY(0,14,_cnt2);
     // display loop counter
-    (void)sprintf(_cnt1,"%5ld",loop);
-    lcd_StringXY(1,15,_cnt1);
+    (void)sprintf(_cnt1,"%6ld",loop);
+    lcd_StringXY(1,14,_cnt1);
 
-    Timer_SleepCounts(31250);
+    // Timer_SleepCounts(31250);
   }                   
 }
 
@@ -97,7 +97,8 @@ interrupt VectorNumber_Vtimch0 void IOC0 (void)
 {
   //increment ticks
   ticks++;
-
+  // toggle yellow led
+  LED_Tog(LED_YELLOW);
   // clear the interrupt flag
   TFLG1 = TFLG1_C0F_MASK;
   // ream for the next event
