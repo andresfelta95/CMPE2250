@@ -18,6 +18,38 @@ void Timer_Init(Timer_Prescale timerPrescale)
     Prscaleval = (unsigned int)pow_i(2,(int)timerPrescale);
 }
 
+void Timer_InitCH0 (unsigned long ulBusClock, Timer_Prescale prescale, unsigned int uiOffset, int enableInt, Timer_PinAction pinAction)
+{
+    TSCR2 = prescale;//set the register
+    TSCR1 = TSCR1_TEN_MASK | TSCR1_TFFCA_MASK;//enable the timer
+    TIOS |= Timer_CH0_BIT;//set as output compare    
+    if (enableInt)
+    {
+        TIE_C0I = 1;
+    }
+    switch (pinAction)
+    {
+        case Timer_Pin_Disco:
+            TCTL2_OM0 = 0;  
+            TCTL2_OL0 = 0;
+            break;
+        case Timer_Pin_Toggle:
+            TCTL2_OM0 = 0;  
+            TCTL2_OL0 = 1;;
+            break;
+        case Timer_Pin_Clear:
+            TCTL2_OM0 = 1;  
+            TCTL2_OL0 = 0;
+            break;
+        case Timer_Pin_Set:
+            TCTL2_OM0 = 1;  
+            TCTL2_OL0 = 1;
+            break;
+    }
+    TC0 = TCNT + uiOffset;
+    
+}
+
 void TimerCH_EnableAsOutput(Timer_CH_BIT timerchannel)
 {
     TIOS |= timerchannel;

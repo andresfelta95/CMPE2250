@@ -24,7 +24,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // Local Prototypes
 /////////////////////////////////////////////////////////////////////////////
-void _LCD(void);
+
 /////////////////////////////////////////////////////////////////////////////
 // Global Variables
 /////////////////////////////////////////////////////////////////////////////
@@ -52,31 +52,13 @@ void main(void)
   /////////////////////////////////////////////////////////////////////////////
   // one-time initializations
   /////////////////////////////////////////////////////////////////////////////
-  PIT_Init();
-  RTI_Init(&_LCD);
+  Clock_Set20MHZ();
+  PIT_Init();  
   lcd_Init();
   SwLED_Init();
   SevSeg_Init();
-  Clock_Set20MHZ();
   //init timer
-  Timer_Init(Timer_Prescale_2);
-  //set chn0 as output
-  TimerCH_EnableAsOutput(Timer_CH0_BIT);
-  TimerCH_IntEnable(Timer_CH0_BIT);
-
-  /*****************************************
-  Compare result Action - TCTL1/TCTL2
-  OMx   OLx
-  0     0  Timer Disconnected from pin
-  0     1  Toggle OCx output line
-  1     0  Clear OCx output lize to zero
-  1     1  Set OCx output line to one
-  *****************************************/
-  TCTL2_OM0 = 0;  
-  TCTL2_OL0 = 1;
-
-  TC0 = TCNT + 50000;
-
+  Timer_InitCH0(20E6, Timer_Prescale_32, 3125, 1, Timer_Pin_Toggle);
   // basic display
   lcd_StringXY(0,0,_ticks);
   lcd_StringXY(1,0,_loop);
@@ -85,6 +67,7 @@ void main(void)
   /////////////////////////////////////////////////////////////////////////////
   for (;;)
   {
+    // wait for timer interrupt
     asm wai;
     //toggle green led
     LED_Tog(LED_GREEN);
@@ -98,15 +81,15 @@ void main(void)
     // display loop counter
     (void)sprintf(_cnt1,"%5ld",loop);
     lcd_StringXY(1,15,_cnt1);
+
+    Timer_SleepCounts(31250);
   }                   
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // Functions
 /////////////////////////////////////////////////////////////////////////////
-void _LCD(void){
-  
-}
+
 /////////////////////////////////////////////////////////////////////////////
 // Interrupt Service Routines
 /////////////////////////////////////////////////////////////////////////////
@@ -118,5 +101,5 @@ interrupt VectorNumber_Vtimch0 void IOC0 (void)
   // clear the interrupt flag
   TFLG1 = TFLG1_C0F_MASK;
   // ream for the next event
-  TC0 += 50000;
+  TC0 += 3125;
 }

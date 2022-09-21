@@ -17,7 +17,7 @@ void lcd_Init (void)
     //PK2-PK0 -> Control Lines (output)
     DDRK |= 0b00000111;
     //1st delay - Delay 40+ [ms]
-    RTI_Delay_ms(45);
+    PIT_Delay_ms(45);
     // Timer_Sleep_ms(45);
     //Present Data on PTH
     PTH  = 0b00111000;  //Function Set
@@ -37,7 +37,7 @@ void lcd_Init (void)
     PIT_Delay_us(2); 
     PORTK_PK0 = 0;
     //2nd Delay, 4.1ms+   
-    RTI_Delay_ms(5);
+    PIT_Delay_ms(5);
     // Timer_Sleep_ms(5);
     //Latch same Instruction again
     PORTK_PK0 = 1;
@@ -207,6 +207,6 @@ void lcd_SmatStringXY(unsigned char ix, unsigned char iy, char const * straddr, 
         }
         lcd_Data(*straddr++);
         lcd_AddrXY(ix, iy);
-        RTI_Delay_ms(delay);
+        PIT_Delay_ms(delay);
     }
 }

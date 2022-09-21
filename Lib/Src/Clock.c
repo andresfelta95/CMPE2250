@@ -91,6 +91,19 @@ void PIT_Delay_us(unsigned int usDelay)
   }
 }
 
+void PIT_Delay_ms(unsigned int msDelay)
+{
+  unsigned long counts  = Clock_GetBusSpeed() / 1000;
+  if(PITCE & PITCE_PCE0_MASK) //Check that PIT0 is enabled
+  {
+    PITLD0 = (unsigned int)(counts * msDelay);//timer Set for ms Counter
+    PITTF = PITTF_PTF0_MASK;        //clear flag PIT0, safety practice
+    PITFLT |= PITFLT_PFLT0_MASK;    //Force load register into PIT0
+    while(!(PITTF & PITTF_PTF0_MASK)); //wait until flag gets active
+    PITTF = PITTF_PTF0_MASK; //clear flag PIT channel 0
+  }
+}
+
 void RTI_Init(void(*function)(void))
 {
     RTICTL = RTICTL_RTDEC_MASK | RTICTL_RTR4_MASK | 7;
