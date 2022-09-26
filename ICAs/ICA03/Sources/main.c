@@ -38,6 +38,8 @@ char _Sec[10] = {0};
 unsigned int cntr = 0;
 int _ActvStWtch = 0;
 int _TimeCnt = 0;
+int _Flag = 0;
+int _FlagJ = 0;
 float _TimeCntF = 0;
 /////////////////////////////////////////////////////////////////////////////
 // Constants
@@ -75,6 +77,22 @@ void main(void)
   {
     // wait for interrupts
     asm wai;
+    if(_Flag == 1)
+    {
+      _Flag = 0;
+      // increment the counter
+      if (cntr++ > 9999)
+      {
+        cntr = 0;
+      }
+      // increment Stopwatch
+      if (_ActvStWtch)
+      {
+        // increment stopwatch every 50ms
+        _TimeCnt += 1;
+      }
+      // if flag is set increment counter
+    }
     // update the 7-segment display with the current count
     SevSeg_Top4(HexToBCD(cntr));
     // Convert count into seconds
@@ -96,17 +114,8 @@ void main(void)
 //timer interrupt
 interrupt VectorNumber_Vtimch0 void Timer0_ISR(void)
 {
-  // increment the counter
-  if (cntr++ > 9999)
-  {
-    cntr = 0;
-  }
-  // increment Stopwatch
-  if (_ActvStWtch)
-  {
-    // increment stopwatch every 50ms
-    _TimeCnt += 1;
-  }
+  // Set flag in main
+  _Flag = 1;
   // clear the interrupt flag
   TFLG1 = TFLG1_C0F_MASK;
   // ream the next event
