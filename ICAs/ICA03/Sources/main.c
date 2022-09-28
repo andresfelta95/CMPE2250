@@ -39,12 +39,12 @@ char _TimeFormat[] = {0};
 char _TimeS[10] = {0};
 unsigned int cntr = 0;
 int _ActvStWtch = 0;
-int _TimeCnt = 0;
 int _TimeStpW = 0;
 int _TimeMin = 0;
 int _TimeHr = 0;
 int _Flag = 0;
 int _FlagJ = 0;
+unsigned long _TimeCnt = 0;
 float _TimeSec = 0;
 float _TimeCntF = 0;
 /////////////////////////////////////////////////////////////////////////////
@@ -66,6 +66,7 @@ void main(void)
   SwLED_Init();     // initialize the switches and LEDs
   SevSeg_Init();    // initialize the 7-segment display
   PortJ_Init();     // initialize the port J
+  lcd_DispControl(0,0);
   // Set Timer at 50ms interval
   Timer_InitCH0(20E6, Timer_Prescale_32, 31250, 1, Timer_Pin_Toggle);
   // add Name to LCD
@@ -124,8 +125,8 @@ void main(void)
     }
 
     // update the LCD with the current Stopwatch time
-    (void)sprintf(_TimeS, "%5.1f", _TimeCntF);
-    lcd_StringXY(3, 6, _TimeS);
+    (void)sprintf(_TimeS, "%9.1f", _TimeCntF);
+    lcd_StringXY(3, 5, _TimeS);
     // update the LCD with the time in hours, minutes, and seconds in one line
     (void)sprintf(_TimeFormat, "%02d:%02d:%04.1f", _TimeHr, _TimeMin, _TimeSec);
     lcd_StringXY(2, 6, _TimeFormat);
