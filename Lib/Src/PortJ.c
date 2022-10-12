@@ -23,7 +23,7 @@
 void PortJ_Init(void)
 {
     // setup port J for interrupts
-    PTJ &= 0b11111100; // clear port J or will interrupt once for free (22.3.2.54)
+    PTJ &= 0b11111100;  // clear port J or will interrupt once for free (22.3.2.54)
     DDRJ &= 0b11111100; // j0:1 inputs (22.3.2.56)
     PPSJ |= 0b00000011; // j0:1 rising edge (22.3.2.59)
     PIEJ |= 0b00000011; // j0:1 cause interrupts (22.3.2.60)
