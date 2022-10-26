@@ -74,45 +74,6 @@ float Clock_GetFactor(void)
   factor = Clock_GetBusSpeed() / (2 * DEF_BUS_CLOCK);
   return factor;
 }
-
-void PIT_Init(void)
-{
-  // PIT Timer Initialization
-  // PIT0 and PIT1 connected to micro Timer 0
-  PITMTLD0 = 0;                                       // Micro Timer base 0, Mod-1 (bypass)
-  PITMUX &= ~(PITMUX_PMUX0_MASK | PITMUX_PMUX1_MASK); // Connect PIT0 and PIT1 to Micro-Timer 0
-  PITCFLMT |= PITCFLMT_PITE_MASK;                     // Enable General PIT
-  PITCE |= PITCE_PCE0_MASK;                           // enable PIT 0, used for us delays
-}
-//-----------------------------------------------------------------
-void PIT_Delay_us(unsigned int usDelay)
-{
-  unsigned long counts = Clock_GetBusSpeed() / 1000000;
-  if (PITCE & PITCE_PCE0_MASK) // Check that PIT0 is enabled
-  {
-    PITLD0 = (unsigned int)(counts * usDelay); // timer Set for us Counter
-    PITTF = PITTF_PTF0_MASK;                   // clear flag PIT0, safety practice
-    PITFLT |= PITFLT_PFLT0_MASK;               // Force load register into PIT0
-    while (!(PITTF & PITTF_PTF0_MASK))
-      ;                      // wait until flag gets active
-    PITTF = PITTF_PTF0_MASK; // clear flag PIT channel 0
-  }
-}
-
-void PIT_Delay_ms(unsigned int msDelay)
-{
-  unsigned long counts = Clock_GetBusSpeed() / 1000;
-  if (PITCE & PITCE_PCE0_MASK) // Check that PIT0 is enabled
-  {
-    PITLD0 = (unsigned int)(counts * msDelay); // timer Set for ms Counter
-    PITTF = PITTF_PTF0_MASK;                   // clear flag PIT0, safety practice
-    PITFLT |= PITFLT_PFLT0_MASK;               // Force load register into PIT0
-    while (!(PITTF & PITTF_PTF0_MASK))
-      ;                      // wait until flag gets active
-    PITTF = PITTF_PTF0_MASK; // clear flag PIT channel 0
-  }
-}
-
 void RTI_Init(void (*function)(void))
 {
   RTICTL = RTICTL_RTDEC_MASK | RTICTL_RTR4_MASK | 7;

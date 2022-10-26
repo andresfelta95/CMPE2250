@@ -21,6 +21,7 @@
 #include "PortJ.h"  //Port J
 #include "stdlib.h" //Standard Library
 #include "stdio.h"  //Standard I/O
+#include "pit.h"    //PIT
 
 /////////////////////////////////////////////////////////////////////////////
 // Local Prototypes

@@ -8,6 +8,7 @@
 #include "Clock.h"
 #include "ECT.h"
 #include "lcd.h"
+#include "pit.h"
 
 void lcd_Init(void)
 {

@@ -2,7 +2,7 @@
 // HC12 Program:  YourProg - MiniExplanation
 // Processor:     MC9S12XDP512
 // Bus Speed:     20 MHz (Requires Active PLL)
-// Author:        This B. You
+// Author:        Andres Tangarife
 // Details:       A more detailed explanation of the program is entered here
 // Date:          Date Created
 // Revision History :
@@ -21,6 +21,7 @@
 #include "PortJ.h"
 #include "stdlib.h"
 #include "stdio.h"
+#include "pit.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // Local Prototypes
