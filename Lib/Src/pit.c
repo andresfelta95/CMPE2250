@@ -10,7 +10,7 @@
 //  Global Variables
 unsigned int factor8Bit;
 
-int PIT_Init0( unsigned long ulInterval_us, int iDebugSegs)
+int PIT_Init0( unsigned long ulInterval_us)
 {
     // enable interrupt on chan 0
     PITINTE = 0b00000001; // 13.3.0.5
@@ -37,7 +37,7 @@ int PIT_Init0( unsigned long ulInterval_us, int iDebugSegs)
     return 0;
 }
 
-int PIT_Inits(unsigned long ulInterval_us, PIT_Channel eChannel, PIT_Int eInt, int iDebugSegs)
+int PIT_Inits(unsigned long ulInterval_us, PIT_Channel eChannel, PIT_Int eInt)
 {
     // enable interrupt if selected on channel selected
     if (eInt == 1)

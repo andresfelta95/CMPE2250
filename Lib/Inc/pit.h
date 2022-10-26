@@ -34,18 +34,14 @@ typedef enum PIT_Int
 // Library Prototypes
 /////////////////////////////////////////////////////////////////////////////
 
-// ulBusRate      : bus frequency, in Hz
+
 // ulInterval_us  : desired interval in us
-// iDebugSegs     : option, debug info placed in segs (computed clocking values for PIT)
-int PIT_Init0 (unsigned long ulInterval_us, int iDebugSegs);
+int PIT_Init0 (unsigned long ulInterval_us);
 
-
-// ulBusRate      : bus frequency, in Hz
 // ulInterval_us  : desired interval in us
 // eChannel       : PIT channel to use
 // eInt           : enable interrupt
-// iDebugSegs     : option, debug info placed in segs (computed clocking values for PIT)
-int PIT_Inits (unsigned long ulBusRate, unsigned long ulInterval_us, PIT_Channel eChannel, PIT_Int eInt, int iDebugSegs);
+int PIT_Inits (unsigned long ulInterval_us, PIT_Channel eChannel, PIT_Int eInt);
 void PIT_Init(void);
 void PIT_Delay_us(unsigned int);
 void PIT_Delay_ms(unsigned int);
