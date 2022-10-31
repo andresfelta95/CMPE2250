@@ -26,7 +26,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // Local Prototypes
 /////////////////////////////////////////////////////////////////////////////
-
+void ShowPITCount(void); //Show PIT Count
 /////////////////////////////////////////////////////////////////////////////
 // Global Variables
 /////////////////////////////////////////////////////////////////////////////
@@ -43,33 +43,36 @@ void main(void)
   // main entry point
   _DISABLE_COP();
   EnableInterrupts;
-  // Initilize elements
-  Clock_Set20MHZ();                           // set the clock to 20 MHz
-  PIT_Init();                                 // initialize the PIT
-  lcd_Init();                                 // initialize the LCD
-  SwLED_Init();                               // initialize the switches and LEDs
-  SevSeg_Init();                              // initialize the 7-segment display
-  PortJ_Init();                               // initialize the port J
-  // Set up the PIT0 with 10ms period
-  PIT_Init0(10000);
-  
   /////////////////////////////////////////////////////////////////////////////
   // one-time initializations
   /////////////////////////////////////////////////////////////////////////////
-
+  Clock_Set20MHZ();                           // set the clock to 20 MHz
+  Timer_Init(Timer_Prescale_128);             // initialize timer
+  // PIT_Init();                                 // initialize the PIT
+  lcd_Init();                                 // initialize the LCD
+  (void)PIT_Init0(10000); //Initialize PIT0 with 10ms interval
+  SwLED_Init();                               // initialize the switches and LEDs
+  SevSeg_Init();                              // initialize the 7-segment display
+  PortJ_Init(); 
   /////////////////////////////////////////////////////////////////////////////
   // main program loop
   /////////////////////////////////////////////////////////////////////////////
+  ShowPITCount();
+  lcd_StringXY(0,0,"PIT Count: ");
   for (;;)
   {
-    SevSeg_Bot4(pitCnt);                        // display the PIT count on the 7-segment display
+    ShowPITCount(); // display the PIT count on the 7-segment display
   }                   
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // Functions
 /////////////////////////////////////////////////////////////////////////////
-
+void ShowPITCount(void)
+{
+  // display the PIT count on the SevSeg
+  SevSeg_Bot4(HexToBCD(pitCnt));
+}
 /////////////////////////////////////////////////////////////////////////////
 // Interrupt Service Routines
 /////////////////////////////////////////////////////////////////////////////

@@ -5,7 +5,7 @@
 // March, 2022
 #include <hidef.h>      /* common defines and macros */
 #include "derivative.h" /* derivative-specific definitions */
-#include "Clock.h"
+// #include "Clock.h"
 #include "ECT.h"
 #include "lcd.h"
 #include "pit.h"
@@ -18,7 +18,8 @@ void lcd_Init(void)
     // PK2-PK0 -> Control Lines (output)
     DDRK |= 0b00000111;
     // 1st delay - Delay 40+ [ms]
-    PIT_Delay_ms(45);
+    // PIT_Delay_ms(45);
+    Timer_Sleep_ms(45);
     // Timer_Sleep_ms(45);
     // Present Data on PTH
     PTH = 0b00111000; // Function Set
@@ -35,20 +36,24 @@ void lcd_Init(void)
     PORTK_PK2 = 0;
     // Latch Instruction
     PORTK_PK0 = 1;
-    PIT_Delay_us(2);
+    // PIT_Delay_us(2);
+    Timer_Sleep_us(2);
     PORTK_PK0 = 0;
     // 2nd Delay, 4.1ms+
-    PIT_Delay_ms(5);
-    // Timer_Sleep_ms(5);
+    // PIT_Delay_ms(5);
+    Timer_Sleep_ms(5);
     // Latch same Instruction again
     PORTK_PK0 = 1;
-    PIT_Delay_us(2);
+    // PIT_Delay_us(2);
+    Timer_Sleep_us(2);
     PORTK_PK0 = 0;
     // third Delay  100uS+
-    PIT_Delay_us(150); // third Delay  100uS+
+    // PIT_Delay_us(150); // third Delay  100uS+
+    Timer_Sleep_us(150);
     // Latch same Instruction again
     PORTK_PK0 = 1;
-    PIT_Delay_us(2);
+    // PIT_Delay_us(2);
+    Timer_Sleep_us(2);
     PORTK_PK0 = 0;
     // Busy flag is active now**********************
     // lcd_Ctrl(0b00111000); //Function set

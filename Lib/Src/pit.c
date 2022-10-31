@@ -6,13 +6,14 @@
 #include <hidef.h>      /* common defines and macros */
 #include "derivative.h" /* derivative-specific definitions */
 #include "pit.h"
-#include "Clock.c"
+#include "Clock.h"
 //  Global Variables
-unsigned int factor8Bit = 1;
+unsigned short factor8Bit = 1;
+unsigned long counts;
 
 int PIT_Init0(unsigned long ulInterval_us)
 {
-    unsigned long counts = Clock_GetBusSpeed() / (1E6f / ulInterval_us);
+    counts = 20000000 / (1000000 / ulInterval_us);
     // enable interrupt on chan 0
     PITINTE = PIT0; // 13.3.0.5
     PITMUX &= 0b11111110; //
@@ -21,7 +22,7 @@ int PIT_Init0(unsigned long ulInterval_us)
     {
         factor8Bit++;
     }
-    if (factor8Bit > 256)
+    if (factor8Bit > 255)
     {
         return 0;
     }
@@ -40,7 +41,7 @@ int PIT_Init0(unsigned long ulInterval_us)
 
 int PIT_Inits(unsigned long ulInterval_us, PIT_Channel eChannel, PIT_Int eInt)
 {
-    unsigned long counts = Clock_GetBusSpeed() * ulInterval_us / 1000000;
+    counts = Clock_GetBusSpeed() * ulInterval_us / 1000000;
     // enable interrupt if selected on channel selected
     if (eInt == 1)
     {
