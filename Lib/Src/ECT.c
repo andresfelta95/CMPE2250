@@ -99,7 +99,10 @@ void Timer_Sleep_us(unsigned int val)
     int iX;
     unsigned long cnt = Clock_GetBusSpeed() / 1000000;
     cnt /= Prscaleval;
-
+    if (cnt <= 0)
+    {
+        cnt = 1;
+    }
     for (iX = 0; iX < val; iX++)
     {
         Timer_SleepCounts((unsigned int)cnt);

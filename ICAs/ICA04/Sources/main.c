@@ -26,11 +26,12 @@
 /////////////////////////////////////////////////////////////////////////////
 // Local Prototypes
 /////////////////////////////////////////////////////////////////////////////
-void ShowPITCount(void); //Show PIT Count
+void ShowCount(void); //Show PIT Count
 /////////////////////////////////////////////////////////////////////////////
 // Global Variables
 /////////////////////////////////////////////////////////////////////////////
 volatile unsigned int pitCnt = 0;
+volatile unsigned int timCnt = 0;
 /////////////////////////////////////////////////////////////////////////////
 // Constants
 /////////////////////////////////////////////////////////////////////////////
@@ -47,35 +48,62 @@ void main(void)
   // one-time initializations
   /////////////////////////////////////////////////////////////////////////////
   Clock_Set20MHZ();                           // set the clock to 20 MHz
-  Timer_Init(Timer_Prescale_128);             // initialize timer
-  // PIT_Init();                                 // initialize the PIT
-  lcd_Init();                                 // initialize the LCD
+  Timer_InitCH0(20000000, Timer_Prescale_64, 3125, 1, Timer_Pin_Toggle); // initialize timer channel 0
   (void)PIT_Init0(10000); //Initialize PIT0 with 10ms interval
   SwLED_Init();                               // initialize the switches and LEDs
   SevSeg_Init();                              // initialize the 7-segment display
   PortJ_Init(); 
+  ShowCount();
   /////////////////////////////////////////////////////////////////////////////
   // main program loop
   /////////////////////////////////////////////////////////////////////////////
-  ShowPITCount();
-  lcd_StringXY(0,0,"PIT Count: ");
   for (;;)
   {
-    ShowPITCount(); // display the PIT count on the 7-segment display
+    #ifdef PART_A
+    asm wai; //wait for interrupt
+    //The delay between the PIT and the timer is 146us
+    //The difference between the two is that the PIT has a priority over the timer
+    #endif  //PART_A
+    //#ifdef PART_B
+    //asm sei; //enable interrupts
+    //Timer_Sleep_ms(20); //Sleep for 20ms
+    //asm cli; //disable interrupts
+    // Answers:
+    // The delay betweem PIT and Timer was >5 seconds.
+    // 1. The PIT should occur first and it can be proved by the fact that the PIT count is incremented first.
+    // 2. We can prove it checking waveforms from the LEDs and verifying the time between the Yellow LED and the Green LED.
+    // 3. The PIT has a higher priority than the timer.
+    //#endif  //PART_B
+    
+    ShowCount(); // display the PIT count on the 7-segment display
   }                   
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // Functions
 /////////////////////////////////////////////////////////////////////////////
-void ShowPITCount(void)
+void ShowCount(void)
 {
-  // display the PIT count on the SevSeg
+  //  display the Timer count on the 7-segment display top row
+  SevSeg_Top4(HexToBCD(timCnt));
+  //  display the PIT count on the 7-segment display bottom row
   SevSeg_Bot4(HexToBCD(pitCnt));
 }
 /////////////////////////////////////////////////////////////////////////////
 // Interrupt Service Routines
 /////////////////////////////////////////////////////////////////////////////
+interrupt VectorNumber_Vtimch0 void IOC0 (void)
+{
+  // interrupt service routine for channel 0
+  //TC0 += 3125; // set the next interrupt time
+  TC0 = TCNT + 3125; // set the next interrupt time
+  // take action!
+  if (timCnt++ > 9999)
+  {
+    timCnt = 0;
+    LED_Tog(LED_YELLOW); // toggle the yellow LED
+  }
+}
 interrupt VectorNumber_Vpit0 void PIT0Int (void)
 {
   // clear flag
@@ -85,5 +113,8 @@ interrupt VectorNumber_Vpit0 void PIT0Int (void)
   if (pitCnt++ > 9999)
   {
     pitCnt = 0;
+    // disable the PIT
+    // PITCE = 0;
+    LED_Tog(LED_GREEN); // toggle the green LED
   }
 }

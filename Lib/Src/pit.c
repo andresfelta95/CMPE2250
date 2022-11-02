@@ -13,7 +13,7 @@ unsigned long counts;
 
 int PIT_Init0(unsigned long ulInterval_us)
 {
-    counts = 20000000 / (1000000 / ulInterval_us);
+    counts = Clock_GetBusSpeed() / (1000000 / ulInterval_us);
     // enable interrupt on chan 0
     PITINTE = PIT0; // 13.3.0.5
     PITMUX &= 0b11111110; //

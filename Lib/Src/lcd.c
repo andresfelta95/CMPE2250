@@ -85,7 +85,8 @@ void lcd_Ctrl(unsigned char val)
 
     // latch
     PORTK_PK0 = 1; // E ->  1
-    PIT_Delay_us(2);
+    // PIT_Delay_us(2);
+    Timer_Sleep_us(2);
     PORTK_PK0 = 0; // E ->  0
 }
 
@@ -98,7 +99,8 @@ char lcd_Busy(void)
 
     // latch
     PORTK_PK0 = 1; // E ->  1
-    PIT_Delay_us(2);
+    // PIT_Delay_us(2);
+    Timer_Sleep_us(2);
     PORTK_PK0 = 0; // E ->  0
 
     inVal = PTH & PTH_PTH7_MASK;
@@ -119,7 +121,8 @@ void lcd_Data(unsigned char data)
 
     // latch
     PORTK_PK0 = 1; // E ->  1
-    PIT_Delay_us(2);
+    // PIT_Delay_us(2);
+    Timer_Sleep_us(2);
     PORTK_PK0 = 0; // E ->  0
 }
 void lcd_Addr(unsigned char addr)
@@ -215,6 +218,7 @@ void lcd_SmatStringXY(unsigned char ix, unsigned char iy, char const *straddr, i
         }
         lcd_Data(*straddr++);
         lcd_AddrXY(ix, iy);
-        PIT_Delay_ms(delay);
+        // PIT_Delay_ms(delay);
+        Timer_Sleep_ms(delay);
     }
 }

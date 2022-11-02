@@ -36,6 +36,7 @@
 #define lcd_EDown PORTK &= (~1);
 #define lcd_RUp PORTK |= 4;
 #define lcd_RDown PORTK &= (~4);
+#define MicroDelay {char __x; while (__x--);}
 
 void lcd_Init (void);
 void lcd_Ctrl (unsigned char); //LCD_Inst
