@@ -2,9 +2,12 @@
 // HC12 Program:  YourProg - MiniExplanation
 // Processor:     MC9S12XDP512
 // Bus Speed:     20 MHz (Requires Active PLL)
-// Author:        This B. You
-// Details:       A more detailed explanation of the program is entered here
-// Date:          Date Created
+// Author:        Andres Tangarife
+// Details:       In this lab you will use the timer module to create a timer that supports calibration.
+//                You will additionally explore some ancillary issues with switch debounce,
+//                and program execution time
+//                you will show elapsed time as DDDDD HH:MM:SS:h since reset
+// Date:          11/07/2022
 // Revision History :
 //  each revision will have a date + desc. of changes
 
@@ -26,11 +29,18 @@
 /////////////////////////////////////////////////////////////////////////////
 // Local Prototypes
 /////////////////////////////////////////////////////////////////////////////
-
+void Timer_ConvertToClockVals(unsigned long ulTimeVal);
 /////////////////////////////////////////////////////////////////////////////
 // Global Variables
 /////////////////////////////////////////////////////////////////////////////
-
+typedef struct SClockVals
+{
+  int iThow;          // thousandths of a second 0-999
+  char cSec;          // seconds 0-59
+  char cMin;          // minutes 0-59
+  char cHour;         // hours 0-23
+  unsigned int uiDay; // days 0-9999
+} SClockVals;
 /////////////////////////////////////////////////////////////////////////////
 // Constants
 /////////////////////////////////////////////////////////////////////////////
@@ -43,6 +53,10 @@ void main(void)
   // main entry point
   _DISABLE_COP();
   EnableInterrupts;
+  // other initialization code goes here
+  Clock_Set20MHZ(); // Set the clock to 20 MHz
+  Timer_InitCH0(20E6, Timer_Prescale_1, 2000, 1, 1);  // 1ms
+  lcd_Init(); //LCD
   
   /////////////////////////////////////////////////////////////////////////////
   // one-time initializations
@@ -53,14 +67,31 @@ void main(void)
   /////////////////////////////////////////////////////////////////////////////
   for (;;)
   {
-
-  }                   
+  }
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // Functions
 /////////////////////////////////////////////////////////////////////////////
-
+// Function:    Timer_ConvertToClockVals
+// Description: This function converts the timer value to a clock value
+// Inputs:      unsigned long ulTimerVal - the timer value
+// Outputs:     SClockVals - the clock values
+void Timer_ConvertToClockVals(unsigned long ulTimerVal)
+{
+  SClockVals sClockVals;
+  unsigned long ulTemp;
+  ulTemp = ulTimerVal / 1000;
+  sClockVals.iThow = ulTimerVal - (ulTemp * 1000);
+  ulTemp = ulTemp / 60;
+  sClockVals.cSec = ulTemp - (ulTemp * 60);
+  ulTemp = ulTemp / 60;
+  sClockVals.cMin = ulTemp - (ulTemp * 60);
+  ulTemp = ulTemp / 24;
+  sClockVals.cHour = ulTemp - (ulTemp * 24);
+  sClockVals.uiDay = ulTemp;
+  return sClockVals;
+}
 /////////////////////////////////////////////////////////////////////////////
 // Interrupt Service Routines
 /////////////////////////////////////////////////////////////////////////////
