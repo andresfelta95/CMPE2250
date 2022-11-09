@@ -1254,8 +1254,8 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _DDRCD                                       6       2       2       0   .abs_section_6
      _PARTID                                     1A       2       2       0   .abs_section_1a
      _DBGTB                                      24       2       2       0   .abs_section_24
-     _TCNT                                       44       2       2       2   .abs_section_44
-     _TC0                                        50       2       2       2   .abs_section_50
+     _TCNT                                       44       2       2       1   .abs_section_44
+     _TC0                                        50       2       2       3   .abs_section_50
      _TC1                                        52       2       2       0   .abs_section_52
      _TC2                                        54       2       2       0   .abs_section_54
      _TC3                                        56       2       2       0   .abs_section_56
@@ -2872,7 +2872,7 @@ OBJECT LIST SORTED BY ADDRESS
      _CFORC                                      41       1       1       0   .abs_section_41
      _OC7M                                       42       1       1       0   .abs_section_42
      _OC7D                                       43       1       1       0   .abs_section_43
-     _TCNT                                       44       2       2       2   .abs_section_44
+     _TCNT                                       44       2       2       1   .abs_section_44
      _TSCR1                                      46       1       1       1   .abs_section_46
      _TTOV                                       47       1       1       0   .abs_section_47
      _TCTL1                                      48       1       1       0   .abs_section_48
@@ -2883,7 +2883,7 @@ OBJECT LIST SORTED BY ADDRESS
      _TSCR2                                      4D       1       1       1   .abs_section_4d
      _TFLG1                                      4E       1       1       0   .abs_section_4e
      _TFLG2                                      4F       1       1       0   .abs_section_4f
-     _TC0                                        50       2       2       2   .abs_section_50
+     _TC0                                        50       2       2       3   .abs_section_50
      _TC1                                        52       2       2       0   .abs_section_52
      _TC2                                        54       2       2       0   .abs_section_54
      _TC3                                        56       2       2       0   .abs_section_56
@@ -3596,7 +3596,7 @@ _Startup                  USES __SEG_END_SSTACK Init main
 main                      USES Clock_Set20MHZ Timer_InitCH0 PIT_Init0 
                                 SwLED_Init SevSeg_Init PortJ_Init ShowCount 
 ShowCount                 USES timCnt HexToBCD SevSeg_Top4 pitCnt SevSeg_Bot4 
-IOC0                      USES _TCNT _TC0 timCnt LED_Tog 
+IOC0                      USES _TC0 timCnt LED_Tog 
 PIT0Int                   USES _PITTF pitCnt LED_Tog 
 pow_i                     USES _FDIV _CASE_CHECKED_BYTE _FMUL 
 Timer_InitCH0             USES _TSCR2 _TSCR1 _TIOS _TIE _CASE_CHECKED_BYTE 
