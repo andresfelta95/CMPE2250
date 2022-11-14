@@ -90,6 +90,22 @@ void PWM_8bit_A(PWM_Channel number, A_Lower_Nibble lower_nibble, PWM_Clock clock
 // 
 
 void PWM_8bit_B(PWM_Channel number, B_Lower_Nibble upper_nibble, PWM_Clock clock, PWM_Polarity polarity, unsigned int duty, unsigned int period);
+
+//  PWM_16bit_A
+//  Purpose:    This function configures the PWM module for 16-bit operation
+//  Arguments:  PWM_Channel number, A_Lower_Nibble, PWM_Clock, PWM_Polarity,
+//              unsigned int duty, unsigned int period.
+//
+
+void PWM_16bit_A(PWM_Channel number, A_Lower_Nibble lower_nibble, PWM_Clock clock, PWM_Polarity polarity, unsigned int duty, unsigned int period);
+
+//  PWM_16bit_B
+//  Purpose:    This function configures the PWM module for 16-bit operation
+//  Arguments:  PWM_Channel number, B_Lower_Nibble, PWM_Clock, PWM_Polarity,
+//              unsigned int duty, unsigned int period.
+//
+
+void PWM_16bit_B(PWM_Channel number, B_Lower_Nibble upper_nibble, PWM_Clock clock, PWM_Polarity polarity, unsigned int duty, unsigned int period);
 /////////////////////////////////////////////////////////////////////////////
 // Hidden Helpers (local to implementation only)
 /////////////////////////////////////////////////////////////////////////////
