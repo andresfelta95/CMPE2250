@@ -95,7 +95,7 @@ void PWM_8bit_B(PWM_Channel number, B_Lower_Nibble upper_nibble, PWM_Clock clock
     PWMSCLA = period / 2;
 
     //  Check if we are using channel 2, 3, 6, or 7
-    switch (channel)
+    switch (number)
     {
         case PWM_Channel_2:
             //  Select Clock
@@ -150,7 +150,7 @@ void PWM_8bit_B(PWM_Channel number, B_Lower_Nibble upper_nibble, PWM_Clock clock
     }
 }
 
-void PWM_16bit(PWM_Channel channel, PWM_Clock clock, PWM_Polarity polarity, unsigned int duty, unsigned int period)
+void PWM_16bit(PWM_Channel channel, A_Lower_Nibble lowerNibble, PWM_Clock clock, PWM_Polarity polarity, unsigned int duty, unsigned int period)
 {
     //  Set the clock A to divide by the nibble value
     PWMCLK &= 0b11110000;
