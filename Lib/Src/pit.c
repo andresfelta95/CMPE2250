@@ -13,7 +13,7 @@ unsigned long counts;
 
 int PIT_Init0(unsigned long ulInterval_us)
 {
-    counts = Clock_GetBusSpeed() / (1000000 / ulInterval_us);
+    counts = 20E6 / (1000000 / ulInterval_us);
     // enable interrupt on chan 0
     PITINTE = PIT0; // 13.3.0.5
     PITMUX &= 0b11111110; //
@@ -41,7 +41,7 @@ int PIT_Init0(unsigned long ulInterval_us)
 
 int PIT_Inits(unsigned long ulInterval_us, PIT_Channel eChannel, PIT_Int eInt)
 {
-    counts = Clock_GetBusSpeed() * ulInterval_us / 1000000;
+    counts = 20E6 * ulInterval_us / 1000000;
     // enable interrupt if selected on channel selected
     if (eInt == 1)
     {
@@ -96,29 +96,29 @@ void PIT_Init(void)
 }
 //-----------------------------------------------------------------
 void PIT_Delay_us(unsigned int usDelay)
-{
+{    
     unsigned long counts = Clock_GetBusSpeed() / 1000000;
-    if (PITCE & PITCE_PCE0_MASK) // Check that PIT0 is enabled
+    if (PITCE & PITCE_PCE1_MASK) // Check that PIT0 is enabled
     {
         PITLD0 = (unsigned int)(counts * usDelay); // timer Set for us Counter
-        PITTF = PITTF_PTF0_MASK;                   // clear flag PIT0, safety practice
-        PITFLT |= PITFLT_PFLT0_MASK;               // Force load register into PIT0
-        while (!(PITTF & PITTF_PTF0_MASK))
+        PITTF = PITTF_PTF1_MASK;                   // clear flag PIT0, safety practice
+        PITFLT |= PITFLT_PFLT1_MASK;               // Force load register into PIT0
+        while (!(PITTF & PITTF_PTF1_MASK))
             ;                    // wait until flag gets active
-        PITTF = PITTF_PTF0_MASK; // clear flag PIT channel 0
+        PITTF = PITTF_PTF1_MASK; // clear flag PIT channel 0
     }
 }
 
 void PIT_Delay_ms(unsigned int msDelay)
 {
     unsigned long counts = Clock_GetBusSpeed() / 1000;
-    if (PITCE & PITCE_PCE0_MASK) // Check that PIT0 is enabled
+    if (PITCE & PITCE_PCE1_MASK) // Check that PIT0 is enabled
     {
-        PITLD0 = (unsigned int)(counts * msDelay); // timer Set for ms Counter
-        PITTF = PITTF_PTF0_MASK;                   // clear flag PIT0, safety practice
-        PITFLT |= PITFLT_PFLT0_MASK;               // Force load register into PIT0
-        while (!(PITTF & PITTF_PTF0_MASK))
+        PITLD1 = (unsigned int)(counts * msDelay); // timer Set for ms Counter
+        PITTF = PITTF_PTF1_MASK;                   // clear flag PIT1, safety practice
+        PITFLT |= PITFLT_PFLT1_MASK;               // Force load register into PIT1
+        while (!(PITTF & PITTF_PTF1_MASK))
             ;                    // wait until flag gets active
-        PITTF = PITTF_PTF0_MASK; // clear flag PIT channel 0
+        PITTF = PITTF_PTF1_MASK; // clear flag PIT channel 1
     }
 }

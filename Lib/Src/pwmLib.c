@@ -23,8 +23,8 @@
 void PWM_8bit_A(PWM_Channel channel, A_Lower_Nibble lowerNibble, PWM_Clock clock, PWM_Polarity polarity, unsigned int duty, unsigned int period)
 {
     //  Set the clock A to divide by the nibble value
-    PWMCLK &= 0b11110000;
-    PWMCLK |= lowerNibble;
+    PWMPRCLK &= 0b11110000;
+    PWMPRCLK |= lowerNibble;
 
     //  Set the clock SA to dive by period divided by 2
     PWMSCLA = period / 2;
@@ -88,11 +88,14 @@ void PWM_8bit_A(PWM_Channel channel, A_Lower_Nibble lowerNibble, PWM_Clock clock
 void PWM_8bit_B(PWM_Channel number, B_Lower_Nibble upper_nibble, PWM_Clock clock, PWM_Polarity polarity, unsigned int duty, unsigned int period)
 {
     //  Set the clock B to divide by the nibble value
-    PWMCLK &= 0b10001111;
-    PWMCLK |= upper_nibble;
-
-    //  Set the clock SA to dive by period divided by 2
-    PWMSCLA = period / 2;
+    PWMPRCLK &= 0b10001111;
+    PWMPRCLK |= upper_nibble;
+    //  Check if the the scale clock is required
+    if (clock == PWM_Clock_SX)
+    {
+        //  Set the clock SB to dive by period divided by 2
+        PWMSCLB = period / 2;
+    }
 
     //  Check if we are using channel 2, 3, 6, or 7
     switch (channel)
@@ -153,8 +156,8 @@ void PWM_8bit_B(PWM_Channel number, B_Lower_Nibble upper_nibble, PWM_Clock clock
 void PWM_16bit(PWM_Channel channel, PWM_Clock clock, PWM_Polarity polarity, unsigned int duty, unsigned int period)
 {
     //  Set the clock A to divide by the nibble value
-    PWMCLK &= 0b11110000;
-    PWMCLK |= lowerNibble;
+    PWMPRCLK &= 0b11110000;
+    PWMPRCLK |= lowerNibble;
 
     //  Set the clock SA to dive by period divided by 2
     PWMSCLA = period / 2;
@@ -200,12 +203,15 @@ void PWM_16bit(PWM_Channel channel, PWM_Clock clock, PWM_Polarity polarity, unsi
 void PWM_16bit_B(PWM_Channel channel, B_Lower_Nibble upper_nibble, PWM_Clock clock, PWM_Polarity polarity, unsigned int duty, unsigned int period)
 {
     //  Set the clock B to divide by the nibble value
-    PWMCLK &= 0b10001111;
-    PWMCLK |= upper_nibble;
+    PWMPRCLK &= 0b10001111;
+    PWMPRCLK |= upper_nibble;
 
-    //  Set the clock SA to dive by period divided by 2
-    PWMSCLA = period / 2;
-
+    //  check if the the scale clock is required
+    if (clock == PWM_Clock_SX)
+    {
+        //  Set the clock SB to dive by period divided by 2
+        PWMSCLB = period / 2;
+    }
     //  Check if we are using channel 2, 3, 6, or 7
     switch (channel)
     {

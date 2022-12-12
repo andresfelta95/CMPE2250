@@ -1,0 +1,92 @@
+/////////////////////////////////////////////////////////////////////////////
+// HC12 Program:  YourProg - MiniExplanation
+// Processor:     MC9S12XDP512
+// Bus Speed:     20 MHz (Requires Active PLL)
+// Author:        This B. You
+// Details:       A more detailed explanation of the program is entered here
+// Date:          Date Created
+// Revision History :
+//  each revision will have a date + desc. of changes
+
+/////////////////////////////////////////////////////////////////////////////
+#include <hidef.h>      /* common defines and macros */
+#include "derivative.h" /* derivative-specific definitions */
+
+// other system includes or your includes go here
+#include "lcd.h"    //LCD
+#include "LEDSW.h"  //LEDs and Switches
+#include "Clock.h"  //Clock
+#include "ECT.h"    //Enhanced Capture Timer
+#include "SevSeg.h" //Seven Segment
+#include "PortJ.h"  //Port J
+#include "stdlib.h" //Standard Library
+#include "stdio.h"  //Standard I/O
+#include "pit.h"    //PIT
+#include "sci.h"    //SCI
+#include "AtoD.h"   //AtoD
+
+/////////////////////////////////////////////////////////////////////////////
+// Local Prototypes
+/////////////////////////////////////////////////////////////////////////////
+void DisplayAtoD(void); //Display AtoD Value
+/////////////////////////////////////////////////////////////////////////////
+// Global Variables
+/////////////////////////////////////////////////////////////////////////////
+// volatile uint ADVal[8] = {0}; //AtoD Value
+volatile uint AtoD5 = 0; //AtoD Value
+/////////////////////////////////////////////////////////////////////////////
+// Constants
+/////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////
+// Main Entry
+/////////////////////////////////////////////////////////////////////////////
+void main(void)
+{
+  // main entry point
+  _DISABLE_COP();
+  EnableInterrupts;
+  
+  /////////////////////////////////////////////////////////////////////////////
+  // one-time initializations
+  /////////////////////////////////////////////////////////////////////////////
+  Clock_Set20MHZ(); //Set Clock to 20MHz
+  Timer_Init(Timer_Prescale_64);     //Initialize Timer
+  lcd_Init();    //Initialize LCD
+  SevSeg_Init();    //Initialize Seven Segment
+  PIT_Init();    //Initialize PIT Interrupt
+  AtoDInit(1);      //Initialize AtoD
+  /////////////////////////////////////////////////////////////////////////////
+  // main program loop
+  /////////////////////////////////////////////////////////////////////////////
+  for (;;)
+  {
+    SevSeg_Top4(AtoD5); //Display AtoD Value on channel 5
+    DisplayAtoD(); //Display AtoD Value on channel 5
+  }                   
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// Functions
+/////////////////////////////////////////////////////////////////////////////
+void DisplayAtoD(void)
+{
+  char str[20]; //String for LCD
+  (void)sprintf(str, "Channel 5: %.2f", AtoD5 * 0.005); //Convert AtoD Value to Voltage
+  lcd_StringXY(0, 0, str); //Display String on LCD
+}
+/////////////////////////////////////////////////////////////////////////////
+// Interrupt Service Routines
+/////////////////////////////////////////////////////////////////////////////
+interrupt VectorNumber_Vatd0 void INT_AD0 (void)
+{
+  // read channel values (reading any clears interrupt flag)
+  //  ADVal[0] = ATD0DR0;
+  //  ADVal[1] = ATD0DR1;
+  //  ADVal[2] = ATD0DR2;
+  //  ADVal[3] = ATD0DR3;
+  //  ADVal[4] = ATD0DR4;
+  AtoD5 = ATD0DR5;
+  //  ADVal[6] = ATD0DR6;
+  //  ADVal[7] = ATD0DR7;
+}

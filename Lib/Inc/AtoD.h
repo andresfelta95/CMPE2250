@@ -1,0 +1,31 @@
+/////////////////////////////////////////////////////////////////////////////
+// Processor:     MC9S12XDP512
+// Bus Speed:     20 MHz (Requires Active PLL)
+// Author:        Andres Tangarife
+// Details:       Atod library
+// Revision History
+//      Created: 
+//      each revision will have a date + desc. of changes
+/////////////////////////////////////////////////////////////////////////////
+// interrupt VectorNumber_Vatd0 void INT_AD0 (void)
+// {
+//  // read channel values (reading any clears interrupt flag)
+//  ADVal[0] = ATD0DR0;
+//  ADVal[1] = ATD0DR1;
+//  ADVal[2] = ATD0DR2;
+//  ADVal[3] = ATD0DR3;
+//  ADVal[4] = ATD0DR4;
+//  ADVal[5] = ATD0DR5;
+//  ADVal[6] = ATD0DR6;
+//  ADVal[7] = ATD0DR7;
+// }
+
+/////////////////////////////////////////////////////////////////////////////
+// Library Prototypes
+/////////////////////////////////////////////////////////////////////////////
+// assumes that interrupts are available on the A/D
+// interrupt VectorNumber_Vatd0 void XXXXX (void);
+void AtoDInit (int iEnableInterrupt);
+/////////////////////////////////////////////////////////////////////////////
+// Hidden Helpers (local to implementation only)
+/////////////////////////////////////////////////////////////////////////////

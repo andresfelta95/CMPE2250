@@ -1,5 +1,5 @@
 *** EVALUATION ***
-PROGRAM "C:\Users\atangarifecamac1\OneDrive - NAIT\Documents\CMPE2250\Demos\PulseW\bin\Project.abs"
+PROGRAM "C:\Users\andre\OneDrive - NAIT\Documents\CMPE2250\Demos\PulseW\bin\Project.abs"
 
 *********************************************************************************************
 TARGET SECTION
@@ -3375,8 +3375,8 @@ rtshc12.c.o (ansixs.lib):
   _CASE_SEARCH _CASE_SEARCH_BYTE _CASE_SEARCH_8 _CASE_SEARCH_8_BYTE _FCALL 
   _FPCMP _PADD _PSUB _PINC _PDEC 
 Clock.c.o:
-  Clock_Set24MHZ Clock_EnableOutput Clock_GetBusSpeed Clock_GetFactor PIT_Init 
-  PIT_Delay_us PIT_Delay_ms RTI_Init RTI_Delay_ms 
+  Clock_Set24MHZ Clock_EnableOutput Clock_GetBusSpeed Clock_GetFactor RTI_Init 
+  RTI_Delay_ms 
 NOT USED VARIABLES
 rtshc12.c.o (ansixs.lib):
   _PowOfTwo_8 _PowOfTwo_16 _PowOfTwo_32 errno 
